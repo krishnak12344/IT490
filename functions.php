@@ -46,6 +46,35 @@ function register($e,$u,$v) {
     return true;
 }
 
+function searchLocation($location){
+  ( $db = mysqli_connect ( 'localhost', 'userLogin', 'password', 'login' ) );
+  if (mysqli_connect_errno())
+  {
+    echo"Failed to connect to MYSQL<br><br> ". mysqli_connect_error();
+    exit();
+  }
+  echo "Successfully connected to MySQL<br><br>";
+  mysqli_select_db($db, 'login' );
+
+  $s = "select * from cacheDB where location = '$location'";
+  //echo "The SQL statement is $s";
+  ($t = mysqli_query ($db,$s)) or die(mysqli_error());
+  $num = mysqli_num_rows($t);
+
+  if ($num == 0){
+    ini_set("allow_url_fopen",1);
+
+    $url = "location.php?location=$location";
+    $data = file_get_contents($url);
+    echo $data;
+    return $data;
+  }else
+  {
+    print "<br>Authorized";
+    return true;
+  }
+}
+
 
 function requestProcessor($request)
   {
@@ -63,6 +92,9 @@ function requestProcessor($request)
           return doValidate($request['sessionId']);
         case "register":
           return register($request['email'],$request['username'],$request['password']);
+          case "location":
+            return searchLocation($request['location']);
+
       }
       return array("returnCode" => '0', 'message'=>"Server received request and processed");
     }
