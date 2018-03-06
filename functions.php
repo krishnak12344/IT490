@@ -56,7 +56,7 @@ function searchLocation($location){
   echo "Successfully connected to MySQL<br><br>";
   mysqli_select_db($db, 'login' );
 
-  $s = "select * from cacheDB where location = '$location'";
+  $s = "select * from cacheDB where loction = '$location'";
   //echo "The SQL statement is $s";
   ($t = mysqli_query ($db,$s)) or die(mysqli_error());
   $num = mysqli_num_rows($t);
@@ -67,11 +67,38 @@ function searchLocation($location){
     $url = "location.php?location=$location";
     $data = file_get_contents($url);
     echo $data;
+    $date = date("Y-m-d");
+    $epoc = strtotime($date);
+    $s1 = "insert into cacheDB(location,jdoc,date) values('$location','$data','$epoc')";
+    //echo "The SQL statement is $s";
+    ($t1 = mysqli_query ($db,$s1)) or die(mysqli_error());
     return $data;
   }else
   {
-    print "<br>Authorized";
-    return true;
+    $date = date("Y-m-d");
+    $epoc = strtotime($date);
+    while ($r = mysqli_fetch_array($t,MYSQLI_ASSOC)){
+      $dte = $r["date"];
+      $json = $r["jdoc"];
+    }
+    if($epoc > $dte+2){
+      ini_set("allow_url_fopen",1);
+
+      $url = "location.php?location=$location";
+      $data = file_get_contents($url);
+      echo $data;
+      $date1 = date("Y-m-d");
+      $epoc1 = strtotime($date1);
+      $s1 = "update cacheDB SET jdoc='$data',date='$epoc1' WHERE location='$location'";
+      //echo "The SQL statement is $s";
+      ($t1 = mysqli_query ($db,$s1)) or die(mysqli_error());
+      return $data;
+    }
+    else{
+      return $json;
+    }
+
+
   }
 }
 
