@@ -69,7 +69,7 @@ function searchLocation($location){
     echo $data;
     $date = date("Y-m-d");
     $epoc = strtotime($date);
-    $s1 = "insert into cacheDB(location,jdoc,date) values('$location','$data','$epoc')";
+    $s1 = "insert into cacheDB(loction,jdoc,date) values('$location','$data','$epoc')";
     //echo "The SQL statement is $s";
     ($t1 = mysqli_query ($db,$s1)) or die(mysqli_error());
     return $data;
@@ -89,7 +89,7 @@ function searchLocation($location){
       echo $data;
       $date1 = date("Y-m-d");
       $epoc1 = strtotime($date1);
-      $s1 = "update cacheDB SET jdoc='$data',date='$epoc1' WHERE location='$location'";
+      $s1 = "update cacheDB SET jdoc='$data',date='$epoc1' WHERE loction='$location'";
       //echo "The SQL statement is $s";
       ($t1 = mysqli_query ($db,$s1)) or die(mysqli_error());
       return $data;
