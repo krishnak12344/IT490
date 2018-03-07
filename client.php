@@ -6,7 +6,7 @@ require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 
 function searchLocation($location){
-    $client = new rabbitMQClient("testRabbitMQ.ini","DBServer");
+    $client = new rabbitMQClient("testRabbitMQ.ini","apiServer");
     if (isset($argv[1]))
     {
       $msg = $argv[1];
