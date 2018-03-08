@@ -185,8 +185,8 @@ function searchBySpeciality($location,$speciality){
   }
 }
 
-function searchByInsurance($location,$insurance){
-  $key = pack('H*', "bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3");
+function addAP($uid,$name,$date,$user){
+
 
   ( $db = mysqli_connect ( 'localhost', 'userLogin', 'password', 'login' ) );
   if (mysqli_connect_errno())
@@ -197,62 +197,100 @@ function searchByInsurance($location,$insurance){
   echo "Successfully connected to MySQL<br><br>";
   mysqli_select_db($db, 'login' );
 
-  $s = "select * from cacheI where loction = '$location' and insurance='$insurance'";
+  $s = "select * from vList where uid = '$uid'";
   echo "The SQL statement is $s";
   ($t = mysqli_query ($db,$s)) or die(mysqli_error());
   $num = mysqli_num_rows($t);
 
   if ($num == 0){
-    $data = insurance($location,$insurance);
-    echo $data;
-
-    $date = date("Y-m-d");
-    $epoc = strtotime($date);
-    echo $epoc;
-    $s1 = "insert into cacheI(loction,insurance,jdoc,date) values('$location','$insurance','$data','$epoc')";
+    $s1 = "insert into vList(uid,user,Doctor,date,visited) values('$uid','$user','$name','$date','N')";
     echo "The SQL statement is $s1";
     ($t1 = mysqli_query ($db,$s1)) or die(mysqli_error());
-    $dec = base64_decode($data);
-    $decrypt3 = mcrypt_decrypt(MCRYPT_RIJNDAEL_256,$key,$dec,MCRYPT_MODE_ECB);
-    echo $decrypt3;
-    return $decrypt3;
+    $s2 = "select * from vList where user = '$user' and visited = 'N'";
+    echo "The SQL statement is $s2";
+    ($t2 = mysqli_query ($db,$s2)) or die(mysqli_error());
+    $num2= mysqli_num_rows($t2);
+    $out="<html><head></head><body><table><th>Name</th><th>Date</th><th>Status</th>";
+    while ($r = mysqli_fetch_row($t2)){
+      $id = r[0];
+      $u = r[1];
+      $n = r[2];
+      $d = r[3];
+      $out .= "<td>$id</td>";
+      $out .= "<td>$u</td>";
+      $out .= "<td>$n</td>";
+      $out .= "<td>$d</td>";
+      $out .= "<td><a href='visited.php?uid=$uid&type=rm'>Visited</td>";
+
+}
+$out .= "</table></body></html>";
+    return $out;
   }else
   {
-    $date = date("Y-m-d");
-    $epoc = strtotime($date);
-    $s2 = "select*from cacheI where loction='$location' and insurance='$insurance'";
-    echo $s2;
+
+    $s1 = "update vList SET date='$date' WHERE uid='$uid' and visited = 'N'";
+    echo "The SQL statement is $s1";
+    ($t1 = mysqli_query ($db,$s1)) or die(mysqli_error());
+    $s2 = "select * from vList where user = '$user' and visited = 'N'";
+    echo "The SQL statement is $s2";
     ($t2 = mysqli_query ($db,$s2)) or die(mysqli_error());
+    $num2= mysqli_num_rows($t2);
+    $out="<html><head></head><body><table><th>Name</th><th>Date</th><th>Status<th>";
     while ($r = mysqli_fetch_row($t2)){
-      $dte = $r[3];
-      $json = $r[2];
-      echo $json;
-      $dec = base64_decode($json);
-      $decrypt = mcrypt_decrypt(MCRYPT_RIJNDAEL_256,$key,$dec,MCRYPT_MODE_ECB);
+      $id = r[0];
+      $u = r[1];
+      $n = r[2];
+      $d = r[3];
+      $out .= "<td>$id</td>";
+      $out .= "<td>$u</td>";
+      $out .= "<td>$n</td>";
+      $out .= "<td>$d</td>";
+      $out .= "<td><a href='visited.php?uid=$uid&type=rm'>Visited</td>";
 
-      echo $decrypt;
-      if($epoc > $dte+2){
-        $data = insurance($location,$insurance);
-        echo $data;
-        $date1 = date("Y-m-d");
-        $epoc1 = strtotime($date1);
-        $s1 = "update cacheI SET jdoc='$data',date='$epoc1' WHERE loction='$location' and insurance='$insurance'";
-        //echo "The SQL statement is $s";
-        ($t1 = mysqli_query ($db,$s1)) or die(mysqli_error());
-        $dec1 = base64_decode($data);
-        $decrypt1 = mcrypt_decrypt(MCRYPT_RIJNDAEL_256,$key,$dec1,MCRYPT_MODE_ECB);
-        return $decrypt1;
-      }
-
-        return $decrypt;
-
-
+  }
+  $out .= "</table></body></html>";
+    return $out;
     }
 
 
   }
-}
 
+
+function getList($user){
+
+
+
+    ( $db = mysqli_connect ( 'localhost', 'userLogin', 'password', 'login' ) );
+    if (mysqli_connect_errno())
+    {
+      echo"Failed to connect to MYSQL<br><br> ". mysqli_connect_error();
+      exit();
+    }
+    echo "Successfully connected to MySQL<br><br>";
+    mysqli_select_db($db, 'login' );
+
+      $s2 = "select * from vList where user = '$user' and visited = 'N'";
+      echo "The SQL statement is $s2";
+      ($t2 = mysqli_query ($db,$s2)) or die(mysqli_error());
+      $num2= mysqli_num_rows($t2);
+      $out="<html><head></head><body><table><th>Name</th><th>Date</th><th>Status<th>";
+      while ($r = mysqli_fetch_row($t2)){
+        $id = r[0];
+        $u = r[1];
+        $n = r[2];
+        $d = r[3];
+        $out .= "<td>$id</td>";
+        $out .= "<td>$u</td>";
+        $out .= "<td>$n</td>";
+        $out .= "<td>$d</td>";
+        $out .= "<td><a href='visited.php?uid=$uid&type=rm'>Visited</td>";
+
+    }
+    $out .= "</table></body></html>";
+      return $out;
+
+
+}
 function searchByUid($uid){
   $key = pack('H*', "bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3");
 
@@ -322,7 +360,6 @@ function searchByUid($uid){
 }
 
 
-
 function requestProcessor($request)
   {
       echo "received request".PHP_EOL;
@@ -347,6 +384,10 @@ function requestProcessor($request)
                 return searchByInsurance($request['location'],$speciality['insurance']);
                 case "uid":
                   return searchByUid($request['uid']);
+                  case "addap":
+                    return addAP($request['uid'],$request['$name'],$request['$date'],$request['user']);
+                    case "getList":
+                      return getList($request['user']);
 
       }
       return array("returnCode" => '0', 'message'=>"Server received request and processed");
