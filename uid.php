@@ -3,7 +3,7 @@
 error_reporting(-1);
 ini_set('display_errors',true);
 
-include('client.php');
+include_once('client.php');
 function uid($uid){
 
 
