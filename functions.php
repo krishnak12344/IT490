@@ -268,15 +268,13 @@ function addAP($uid,$name,$date,$user){
     $num2= mysqli_num_rows($t2);
     $out="<html><head></head><body><table><th>Name</th><th>Date</th><th>Status</th>";
     while ($r = mysqli_fetch_row($t2)){
-      $id = r[0];
-      $u = r[1];
-      $n = r[2];
-      $d = r[3];
-      $out .= "<td>$id</td>";
-      $out .= "<td>$u</td>";
-      $out .= "<td>$n</td>";
-      $out .= "<td>$d</td>";
-      $out .= "<td><a href='visited.php?uid=$uid&type=rm'>Visited</td>";
+      $id = $r[0];
+      $u = $r[1];
+      $n = $r[2];
+      $d = $r[3];
+      $out .= "<tr><td>$n</td></tr>";
+      $out .= "<tr><td>$d</td></tr>";
+      $out .= "<tr><td><a href='visited.php?uid=$uid&type=rm'>Visited</td></tr>";
 
 }
 $out .= "</table></body></html>";
@@ -294,15 +292,13 @@ $out .= "</table></body></html>";
     $num2= mysqli_num_rows($t2);
     $out="<html><head></head><body><table><th>Name</th><th>Date</th><th>Status<th>";
     while ($r = mysqli_fetch_row($t2)){
-      $id = r[0];
-      $u = r[1];
-      $n = r[2];
-      $d = r[3];
-      $out .= "<td>$id</td>";
-      $out .= "<td>$u</td>";
-      $out .= "<td>$n</td>";
-      $out .= "<td>$d</td>";
-      $out .= "<td><a href='visited.php?uid=$uid&type=rm'>Visited</td>";
+      $id = $r[0];
+      $u = $r[1];
+      $n = $r[2];
+      $d = $r[3];
+      $out .= "<tr><td>$n</td></tr>";
+      $out .= "<tr><td>$d</td></tr>";
+      $out .= "<tr><td><a href='visited.php?uid=$uid&type=rm'>Visited</td></tr>";
 
   }
   $out .= "</table></body></html>";
@@ -333,15 +329,11 @@ function getList($user){
       $num2= mysqli_num_rows($t2);
       $out="<html><head></head><body><table><th>Name</th><th>Date</th><th>Status<th>";
       while ($r = mysqli_fetch_row($t2)){
-        $id = r[0];
-        $u = r[1];
-        $n = r[2];
-        $d = r[3];
-        $out .= "<td>$id</td>";
-        $out .= "<td>$u</td>";
-        $out .= "<td>$n</td>";
-        $out .= "<td>$d</td>";
-        $out .= "<td><a href='visited.php?uid=$uid&type=rm'>Visited</td>";
+        $n = $r[2];
+        $d = $r[3];
+        $out .= "<tr><td>$n</td></tr>";
+        $out .= "<tr><td>$d</td></tr>";
+        $out .= "<tr><td><a href='visited.php?uid=$uid&type=rm'>Visited</td></tr>";
 
     }
     $out .= "</table></body></html>";
