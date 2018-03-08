@@ -216,8 +216,9 @@ $date = date("Y-m-d");
 $epoc = strtotime($date);
 $s2 = "select*from cacheI where loction='$location' and insurance='$insurance'";
 echo $s2;
-while ($r = mysqli_fetch_row($t2)){
 ($t2 = mysqli_query ($db,$s2)) or die(mysqli_error());
+while ($r = mysqli_fetch_row($t2)){
+
 $dte = $r[3];
 $json = $r[2];
 echo $json;
@@ -279,6 +280,7 @@ function addAP($uid,$name,$date,$user){
 
 }
 $out .= "</table></body></html>";
+    echo $out;
     return $out;
   }else
   {
@@ -304,6 +306,7 @@ $out .= "</table></body></html>";
 
   }
   $out .= "</table></body></html>";
+    echo $out;
     return $out;
     }
 
@@ -436,11 +439,11 @@ function requestProcessor($request)
             case "speciality":
               return searchBySpeciality($request['location'],$request['speciality']);
               case "insurance":
-                return searchByInsurance($request['location'],$speciality['insurance']);
+                return searchByInsurance($request['location'],$request['insurance']);
                 case "uid":
                   return searchByUid($request['uid']);
                   case "addap":
-                    return addAP($request['uid'],$request['$name'],$request['$date'],$request['user']);
+                    return addAP($request['uid'],$request['name'],$request['date'],$request['user']);
                     case "getList":
                       return getList($request['user']);
 
