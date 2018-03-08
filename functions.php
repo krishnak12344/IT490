@@ -272,9 +272,9 @@ function addAP($uid,$name,$date,$user){
       $u = $r[1];
       $n = $r[2];
       $d = $r[3];
-      $out .= "<tr><td>$n</td></tr>";
-      $out .= "<tr><td>$d</td></tr>";
-      $out .= "<tr><td><a href='visited.php?uid=$uid&type=rm'>Visited</td></tr>";
+      $out .= "<tr><td>$n</td>";
+      $out .= "<td>$d</td>";
+      $out .= "<td><a href='visited.php?uid=$uid&type=rm'>Visited</td></tr>";
 
 }
 $out .= "</table></body></html>";
@@ -296,9 +296,9 @@ $out .= "</table></body></html>";
       $u = $r[1];
       $n = $r[2];
       $d = $r[3];
-      $out .= "<tr><td>$n</td></tr>";
-      $out .= "<tr><td>$d</td></tr>";
-      $out .= "<tr><td><a href='visited.php?uid=$uid&type=rm'>Visited</td></tr>";
+      $out .= "<tr><td>$n</td>";
+      $out .= "<td>$d</td>";
+      $out .= "<td><a href='visited.php?uid=$uid&type=rm'>Visited</td></tr>";
 
   }
   $out .= "</table></body></html>";
@@ -329,11 +329,12 @@ function getList($user){
       $num2= mysqli_num_rows($t2);
       $out="<html><head></head><body><table><th>Name</th><th>Date</th><th>Status<th>";
       while ($r = mysqli_fetch_row($t2)){
-        $n = $r[2];
+        $uid = $r[0];
+	$n = $r[2];
         $d = $r[3];
-        $out .= "<tr><td>$n</td></tr>";
-        $out .= "<tr><td>$d</td></tr>";
-        $out .= "<tr><td><a href='visited.php?uid=$uid&type=rm'>Visited</td></tr>";
+        $out .= "<tr><td>$n</td>";
+        $out .= "<td>$d</td>";
+        $out .= "<td><a href='visited.php?uid=$uid&type=rm'>Visited</td></tr>";
 
     }
     $out .= "</table></body></html>";
@@ -436,7 +437,7 @@ function requestProcessor($request)
                   return searchByUid($request['uid']);
                   case "addap":
                     return addAP($request['uid'],$request['name'],$request['date'],$request['user']);
-                    case "getList":
+                    case "getlist":
                       return getList($request['user']);
 
       }
