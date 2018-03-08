@@ -81,8 +81,9 @@ function searchUid($uid){
       $msg = "test message";
     }
     $request = array();
-    $request['uid'] = "uid";
+    $request['type']="uid";
     $request['uid'] = $uid;
+
 
     $response = $client->send_request($request);
     //$response = $client->publish($request);
