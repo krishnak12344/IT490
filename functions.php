@@ -342,6 +342,39 @@ function getList($user){
 
 
 }
+
+function newList($user){
+
+
+
+    ( $db = mysqli_connect ( 'localhost', 'userLogin', 'password', 'login' ) );
+    if (mysqli_connect_errno())
+    {
+      echo"Failed to connect to MYSQL<br><br> ". mysqli_connect_error();
+      exit();
+    }
+    echo "Successfully connected to MySQL<br><br>";
+    mysqli_select_db($db, 'login' );
+
+      $s2 = "select * from vList where user = '$user' and visited = 'Y'";
+      echo "The SQL statement is $s2";
+      ($t2 = mysqli_query ($db,$s2)) or die(mysqli_error());
+      $num2= mysqli_num_rows($t2);
+      $out="<html><head></head><body><table><th>Name</th><th>Date</th><th>Status<th>";
+      while ($r = mysqli_fetch_row($t2)){
+        $uid = $r[0];
+	$n = $r[2];
+        $d = $r[3];
+        $out .= "<tr><td>$n</td>";
+        $out .= "<td>$d</td>";
+        $out .= "<td>Visited</td></tr>";
+
+    }
+    $out .= "</table></body></html>";
+      return $out;
+
+
+}
 function searchByUid($uid){
   $key = pack('H*', "bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3");
 
@@ -439,6 +472,11 @@ function requestProcessor($request)
                     return addAP($request['uid'],$request['name'],$request['date'],$request['user']);
                     case "getlist":
                       return getList($request['user']);
+		      case "rmap":
+                    	return rmAP($request['uid']);
+                    	 case "nlist":
+                     	  return newList($request['user']);
+
 
       }
       return array("returnCode" => '0', 'message'=>"Server received request and processed");
