@@ -277,7 +277,7 @@ function searchByUid($uid){
     $date = date("Y-m-d");
     $epoc = strtotime($date);
     echo $epoc;
-    $s1 = "insert into cacheI(uid,jdoc,date) values('$uid','$data','$epoc')";
+    $s1 = "insert into cacheU(uid,jdoc,date) values('$uid','$data','$epoc')";
     echo "The SQL statement is $s1";
     ($t1 = mysqli_query ($db,$s1)) or die(mysqli_error());
     $dec = base64_decode($data);
@@ -288,7 +288,7 @@ function searchByUid($uid){
   {
     $date = date("Y-m-d");
     $epoc = strtotime($date);
-    $s2 = "select*from cacheI where uid='$uid'";
+    $s2 = "select*from cacheU where uid='$uid'";
     echo $s2;
     ($t2 = mysqli_query ($db,$s2)) or die(mysqli_error());
     while ($r = mysqli_fetch_row($t2)){
@@ -304,7 +304,7 @@ function searchByUid($uid){
         echo $data;
         $date1 = date("Y-m-d");
         $epoc1 = strtotime($date1);
-        $s1 = "update cacheI SET jdoc='$data',date='$epoc1' WHERE uid='$uid'";
+        $s1 = "update cacheU SET jdoc='$data',date='$epoc1' WHERE uid='$uid'";
         //echo "The SQL statement is $s";
         ($t1 = mysqli_query ($db,$s1)) or die(mysqli_error());
         $dec1 = base64_decode($data);
