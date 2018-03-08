@@ -274,7 +274,7 @@ function addAP($uid,$name,$date,$user){
       $d = $r[3];
       $out .= "<tr><td>$n</td>";
       $out .= "<td>$d</td>";
-      $out .= "<td><a href='visited.php?uid=$uid&type=rm'>Visited</td></tr>";
+      $out .= "<td><a href='visited.php?uid=$id&type=rm'>Visited</td></tr>";
 
 }
 $out .= "</table></body></html>";
@@ -298,7 +298,7 @@ $out .= "</table></body></html>";
       $d = $r[3];
       $out .= "<tr><td>$n</td>";
       $out .= "<td>$d</td>";
-      $out .= "<td><a href='visited.php?uid=$uid&type=rm'>Visited</td></tr>";
+      $out .= "<td><a href='visited.php?uid=$id&type=rm'>Visited</td></tr>";
 
   }
   $out .= "</table></body></html>";
@@ -481,7 +481,7 @@ function searchByUid($uid){
 }
 
 
-n addAP($uid,$name,$date,$user){
+/*n addAP($uid,$name,$date,$user){
   ( $db = mysqli_connect ( 'localhost', 'userLogin', 'password', 'login' ) );
   if (mysqli_connect_errno())
   {
@@ -552,18 +552,7 @@ function getList($user){
       echo "The SQL statement is $s2";
       ($t2 = mysqli_query ($db,$s2)) or die(mysqli_error());
       $num2= mysqli_num_rows($t2);
-      $out="<html><head></head><body><table><th>Name</th><th>Date</th><th>Status<th>";
-      while ($r = mysqli_fetch_row($t2)){
-        $uid = $r[0];
-	$n = $r[2];
-        $d = $r[3];
-        $out .= "<tr><td>$n</td>";
-        $out .= "<td>$d</td>";
-        $out .= "<td><a href='visited.php?uid=$uid&type=rm'>Visited</td></tr>";
-    }
-    $out .= "</table></body></html>";
-      return $out;
-}
+      $out="<html><head></head><body><table><th>Name</th><th>Date</th*/
 function requestProcessor($request)
   {
       echo "received request".PHP_EOL;
