@@ -9,7 +9,7 @@ function insurance($location,$insurance){
 
 $response = searchInsurance($location,$insurance);
 
-header('Content-Type: apllication/json;charset=utf-8');
+header('Content-Type: application/json;charset=utf-8');
 
 echo($response);
 return $response;
