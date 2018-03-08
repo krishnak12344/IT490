@@ -184,7 +184,62 @@ function searchBySpeciality($location,$speciality){
 
   }
 }
+function searchByInsurance($location,$insurance){
+$key = pack('H*', "bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3");
+( $db = mysqli_connect ( 'localhost', 'userLogin', 'password', 'login' ) );
+   if (mysqli_connect_errno())
+   echo "Successfully connected to MySQL<br><br>";
+   mysqli_select_db($db, 'login' );
+$s = "select * from cacheI where loction = '$location' and insurance='$insurance'";
+echo "The SQL statement is $s";
+   ($t = mysqli_query ($db,$s)) or die(mysqli_error());
+   $num = mysqli_num_rows($t);
 
+   if ($num == 0){
+$data = insurance($location,$insurance);
+echo $data;
+
+$date = date("Y-m-d");
+$epoc = strtotime($date);
+echo $epoc;
+$s1 = "insert into cacheI(loction,insurance,jdoc,date) values('$location','$insurance','$data','$epoc')";
+echo "The SQL statement is $s1";
+($t1 = mysqli_query ($db,$s1)) or die(mysqli_error());
+$dec = base64_decode($data);
+$decrypt3 = mcrypt_decrypt(MCRYPT_RIJNDAEL_256,$key,$dec,MCRYPT_MODE_ECB);
+echo $decrypt3;
+return $decrypt3;
+}
+else
+   {
+$date = date("Y-m-d");
+$epoc = strtotime($date);
+$s2 = "select*from cacheI where loction='$location' and insurance='$insurance'";
+echo $s2;
+while ($r = mysqli_fetch_row($t2)){
+($t2 = mysqli_query ($db,$s2)) or die(mysqli_error());
+$dte = $r[3];
+$json = $r[2];
+echo $json;
+$dec = base64_decode($json);
+$decrypt = mcrypt_decrypt(MCRYPT_RIJNDAEL_256,$key,$dec,MCRYPT_MODE_ECB);
+echo $decrypt;
+if($epoc > $dte+2){
+ $data = insurance($location,$insurance);
+     echo $data;
+  $date1 = date("Y-m-d");
+    $epoc1 = strtotime($date1);
+    $s1 = "update cacheI SET jdoc='$data',date='$epoc1' WHERE loction='$location' and insurance='$insurance'";
+     //echo "The SQL statement is $s";
+     ($t1 = mysqli_query ($db,$s1)) or die(mysqli_error());
+      $dec1 = base64_decode($data);
+      $decrypt1 = mcrypt_decrypt(MCRYPT_RIJNDAEL_256,$key,$dec1,MCRYPT_MODE_ECB);
+             return $decrypt1;
+ }
+ return $decrypt;
+}
+}
+}
 function addAP($uid,$name,$date,$user){
 
 
