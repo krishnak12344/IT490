@@ -4,10 +4,10 @@ require_once('path.inc');
 require_once('get_host_info.inc');
 require_once('rabbitMQLib.inc');
 include ('account.php');
-include('location.php');
-include('speciality.php');
-include('insurance.php');
-include('uid.php');
+include_once('location.php');
+include_once('speciality.php');
+include_once('insurance.php');
+include_once('uid.php');
 
 function auth($u, $v) {
     ( $db = mysqli_connect ( 'localhost', 'userLogin', 'password', 'login' ) );
