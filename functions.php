@@ -514,7 +514,8 @@ function addPri($uid,$user){
   
     }
   }
-function getList($user){
+  
+function priList($user){
     ( $db = mysqli_connect ( 'localhost', 'userLogin', 'password', 'login' ) );
     if (mysqli_connect_errno())
     {
@@ -523,11 +524,15 @@ function getList($user){
     }
     echo "Successfully connected to MySQL<br><br>";
     mysqli_select_db($db, 'login' );
-      $s2 = "select * from vList where user = '$user' and visited = 'N'";
-      echo "The SQL statement is $s2";
-      ($t2 = mysqli_query ($db,$s2)) or die(mysqli_error());
-      $num2= mysqli_num_rows($t2);
-      $out="<html><head></head><body><table><th>Name</th><th>Date</th*/
+      $s2 = "select * from pList where user = '$user';
+    echo "The SQL statement is $s2";
+    ($t2 = mysqli_query ($db,$s2)) or die(mysqli_error());
+    while ($r = mysqli_fetch_row($t2)){
+      
+      $u = $r[1];
+      return $u; 
+  }
+  }
 function requestProcessor($request)
   {
       echo "received request".PHP_EOL;
