@@ -506,12 +506,14 @@ function addPri($uid,$user){
     $s2 = "select * from pList where user = '$user'";
     echo "The SQL statement is $s2";
     ($t2 = mysqli_query ($db,$s2)) or die(mysqli_error());
+	$u =""; 
     while ($r = mysqli_fetch_row($t2)){
       
-      $u = $r[1];
-      return $u; 
+      $u .= $r[1];
+       
   }
-  
+  echo $u;
+return $u;
     }
   }
   
