@@ -40,7 +40,7 @@ function searchInsurance($location,$insurance){
     $request = array();
     $request['type'] = "insurance";
     $request['location'] = $location;
-    $request['speciality'] = $insurance;
+    $request['insurance'] = $insurance;
     $response = $client->send_request($request);
     //$response = $client->publish($request);
     //echo "client received response: ".PHP_EOL;
