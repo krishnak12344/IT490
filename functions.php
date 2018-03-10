@@ -490,12 +490,14 @@ function addPri($uid,$user){
   }
   echo "Successfully connected to MySQL<br><br>";
   mysqli_select_db($db, 'login' );
-  $s = "select * from vList where user = '$user'";
+  $s = "select * from pList where user = '$user'";
   echo "The SQL statement is $s";
   ($t = mysqli_query ($db,$s)) or die(mysqli_error());
   $num = mysqli_num_rows($t);
   if ($num == 0){
-    $s1 = "insert into pList(user,uid) values('$uid','$user')";
+    $s1 = "insert into pList(user,uid) values('$user','$uid')";
+($t1 = mysqli_query ($db,$s1)) or die(mysqli_error());
+
     echo "The SQL statement is $s1";   
    return $uid;
   }else
@@ -535,6 +537,7 @@ function priList($user){
       $u .= $r[1];
      
   }
+	echo $u;
 	  return $u;
   }
 function requestProcessor($request)
