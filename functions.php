@@ -585,6 +585,11 @@ function requestProcessor($request)
                     	return rmAP($request['uid'],$request['user']);
                     	 case "nlist":
                      	  return newList($request['user']);
+		        case "addpri":
+                    	return addPri($request['uid'],$request['user']);
+                    	 case "plist":
+                     	  return priList($request['user']);
+		      
 
 
       }
