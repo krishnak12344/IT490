@@ -495,7 +495,7 @@ function addPri($uid,$user){
   ($t = mysqli_query ($db,$s)) or die(mysqli_error());
   $num = mysqli_num_rows($t);
   if ($num == 0){
-    $s1 = "insert into pList(uid,user) values('$uid','$user')";
+    $s1 = "insert into pList(user,uid) values('$uid','$user')";
     echo "The SQL statement is $s1";   
    return $uid;
   }else
