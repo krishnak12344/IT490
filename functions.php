@@ -503,7 +503,7 @@ function addPri($uid,$user){
     $s1 = "update pList SET uid='$uid' WHERE user='$user'";
     echo "The SQL statement is $s1";
     ($t1 = mysqli_query ($db,$s1)) or die(mysqli_error());
-    $s2 = "select * from pList where user = '$user';
+    $s2 = "select * from pList where user = '$user'";
     echo "The SQL statement is $s2";
     ($t2 = mysqli_query ($db,$s2)) or die(mysqli_error());
     while ($r = mysqli_fetch_row($t2)){
