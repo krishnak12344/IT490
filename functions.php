@@ -283,7 +283,7 @@ $out .= "</table></body></html>";
   }else
   {
 
-    $s1 = "update vList SET date='$date' WHERE uid='$uid' and visited = 'N'";
+    $s1 = "update vList SET date='$date', visited = 'N' WHERE uid='$uid'";
     echo "The SQL statement is $s1";
     ($t1 = mysqli_query ($db,$s1)) or die(mysqli_error());
     $s2 = "select * from vList where user = '$user' and visited = 'N'";
@@ -335,7 +335,7 @@ function rmAP($uid,$user){
       $d = $r[3];
       $out .= "<tr><td>$n</td>";
       $out .= "<td>$d</td>";
-      $out .= "<td><a href=>Visited</td></tr>";
+      $out .= "<td>Visited</td></tr>";
 
   }
   $out .= "</table></body></html>";
